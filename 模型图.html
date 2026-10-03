@@ -1,0 +1,88 @@
+<svg viewBox="0 0 680 688" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>CatDogCNN 模型结构图</title>
+<desc>输入 3×128×128 图片，经过三个卷积块提取特征，展平后接两层全连接，最后 sigmoid 输出猫狗概率。</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<g>
+<rect x="40" y="48" width="340" height="52" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="76" y="66" fill="#0C447C" dominant-baseline="central">输入图片</text>
+<text class="ts" x="76" y="84" fill="#185FA5" dominant-baseline="central">3 × 128 × 128（RGB 三通道）</text>
+</g>
+
+<path class="arr" d="M210 100L210 126" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="40" y="128" width="380" height="252" rx="20" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="60" y="150" fill="#0C447C" dominant-baseline="central">特征提取器 self.cnn · 2.36 万参数</text>
+
+<g>
+<rect x="60" y="168" width="340" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="76" y="186" fill="#0C447C" dominant-baseline="central">卷积块 1 · Conv2d(3→16) + ReLU + Pool</text>
+<text class="ts" x="76" y="204" fill="#185FA5" dominant-baseline="central">3×3 卷积 · 输出 16 × 64 × 64</text>
+</g>
+
+<g>
+<rect x="60" y="240" width="340" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="76" y="258" fill="#0C447C" dominant-baseline="central">卷积块 2 · Conv2d(16→32) + ReLU + Pool</text>
+<text class="ts" x="76" y="276" fill="#185FA5" dominant-baseline="central">3×3 卷积 · 输出 32 × 32 × 32</text>
+</g>
+
+<g>
+<rect x="60" y="312" width="340" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="76" y="330" fill="#0C447C" dominant-baseline="central">卷积块 3 · Conv2d(32→64) + ReLU + Pool</text>
+<text class="ts" x="76" y="348" fill="#185FA5" dominant-baseline="central">3×3 卷积 · 输出 64 × 16 × 16</text>
+</g>
+
+<path class="arr" d="M210 380L210 406" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="ts" x="224" y="394" fill="#5F5E5A" dominant-baseline="central">Flatten → 16384 维</text>
+
+<rect x="40" y="408" width="380" height="180" rx="20" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+<text class="th" x="60" y="430" fill="#854F0B" dominant-baseline="central">分类头 self.fc · 209.7 万参数（98.9%）</text>
+
+<g>
+<rect x="60" y="448" width="340" height="52" rx="8" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+<text class="th" x="76" y="466" fill="#412402" dominant-baseline="central">Linear(16384 → 128) + ReLU</text>
+<text class="ts" x="76" y="484" fill="#854F0B" dominant-baseline="central">16384 维压成 128 维</text>
+</g>
+
+<g>
+<rect x="60" y="520" width="340" height="52" rx="8" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+<text class="th" x="76" y="538" fill="#412402" dominant-baseline="central">Linear(128 → 1)</text>
+<text class="ts" x="76" y="556" fill="#854F0B" dominant-baseline="central">输出 1 个实数 logit</text>
+</g>
+
+<path class="arr" d="M210 588L210 614" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="40" y="616" width="340" height="52" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.5"/>
+<text class="th" x="76" y="634" fill="#412402" dominant-baseline="central">Sigmoid 转成概率</text>
+<text class="ts" x="76" y="652" fill="#854F0B" dominant-baseline="central">&gt; 0.5 判狗，否则判猫</text>
+</g>
+
+<path class="leader" d="M380 74L500 74" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<rect x="506" y="40" width="68" height="68" rx="4" fill="#85B7EB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="588" y="74" fill="#5F5E5A" dominant-baseline="central">128×128</text>
+
+<path class="leader" d="M400 194L517 194" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<rect x="523" y="177" width="34" height="34" rx="3" fill="#85B7EB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="588" y="194" fill="#5F5E5A" dominant-baseline="central">64×64</text>
+
+<path class="leader" d="M400 266L525 266" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<rect x="531" y="257" width="17" height="17" rx="2" fill="#85B7EB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="588" y="266" fill="#5F5E5A" dominant-baseline="central">32×32</text>
+
+<path class="leader" d="M400 338L529 338" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<rect x="535" y="333" width="9" height="9" rx="1" fill="#85B7EB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="588" y="338" fill="#5F5E5A" dominant-baseline="central">16×16</text>
+
+<path class="leader" d="M400 474L464 474" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<rect x="470" y="469" width="110" height="10" rx="2" fill="#EF9F27" stroke="#BA7517" stroke-width="0.5"/>
+<text class="ts" x="588" y="474" fill="#5F5E5A" dominant-baseline="central">128 维</text>
+
+<path class="leader" d="M400 546L464 546" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<rect x="470" y="541" width="10" height="10" rx="2" fill="#EF9F27" stroke="#BA7517" stroke-width="0.5"/>
+<text class="ts" x="588" y="546" fill="#5F5E5A" dominant-baseline="central">1 个数</text>
+</svg>
